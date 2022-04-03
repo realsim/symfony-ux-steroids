@@ -1,0 +1,32 @@
+{
+    "name": "mechanic/symfony-ux-steroids",
+    "type": "symfony-bundle",
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/realsim/twig-heroicons.git"
+    }],
+    "require": {
+        "php": "^8.0",
+        "league/flysystem": "^2.3",
+        "symfony/webpack-encore-bundle": "^1.13",
+        "symfony/ux-turbo": "^1.3",
+        "symfony/ux-live-component": "^2.0.0",
+        "symfony/ux-twig-component": "^2.0.0",
+        "mechanic/twig-heroicons": "dev-master",
+        "knplabs/knp-menu-bundle": "^3.1"
+    },
+    "require-dev": {
+        "symfony/debug-bundle": "^5.2|^6.0",
+        "symfony/form": "^5.2|^6.0",
+        "symfony/framework-bundle": "^5.2|^6.0",
+        "symfony/twig-bundle": "^5.2|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Symfony\\UX\\Steroids\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    }
+}

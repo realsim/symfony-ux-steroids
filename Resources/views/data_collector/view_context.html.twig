@@ -1,0 +1,51 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <svg xmlns="http://www.w3.org/2000/svg" style="width: 1.25rem; height: 1.25rem" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+        </svg>
+        <span class="sf-toolbar-value">{{ collector.numberOfVariables }}</span>
+    {% endset %}
+
+    {% if collector.numberOfVariables %}
+        {% set text %}
+            {% for name, type in collector.variablesTypes %}
+                <div class="sf-toolbar-info-piece">
+                    <b>{{ name }}</b>
+                    <span>{{ type }}</span>
+                </div>
+            {% endfor %}
+        {% endset %}
+    {% endif %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
+{% endblock %}
+
+{% block menu %}
+    <span class="label {{ collector.numberOfVariables == 0 ? 'disabled' }}">
+        <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" style="width: 1.25rem; height: 1.25rem" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+            </svg>
+        </span>
+        <strong>Переменные</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Переменные страницы</h2>
+    <p class="help">Могут использоваться как в шаблонах этой страницы, так и в СЕО-шаблонах этого роута.</p>
+
+    {% for name, dump in collector.dumps %}
+        <div class="sf-dump sf-reset">
+            <span class="metadata"><b>{{ name }}</b></span>
+
+            {{ dump|raw }}
+        </div>
+    {% else %}
+        <div class="empty">
+            <p>Переменных нет.</p>
+        </div>
+    {% endfor %}
+{% endblock %}
