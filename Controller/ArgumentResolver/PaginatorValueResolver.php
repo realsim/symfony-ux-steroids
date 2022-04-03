@@ -27,7 +27,7 @@ class PaginatorValueResolver implements ArgumentValueResolverInterface
         return is_a($argument->getType(), Paginator::class, true);
     }
 
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         yield $this->buildPaginator($request);
     }
