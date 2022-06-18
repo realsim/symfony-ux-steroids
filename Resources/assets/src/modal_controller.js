@@ -1,10 +1,26 @@
-import { Controller } from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
     static values = {
         id: String,
         url: String,
         targetFrame: String,
+    }
+
+    initialize() {
+        document.addEventListener('turbo:before-fetch-response', e => this.beforeFetchResponse(e))
+    }
+
+    beforeFetchResponse(e) {
+        const fetchResponse = e.detail.fetchResponse;
+        const redirectLocation = fetchResponse.response.headers.get('Turbo-Modal-Location');
+        if (!redirectLocation) {
+            return;
+        }
+
+        e.preventDefault();
+        Turbo.clearCache();
+        Turbo.visit(redirectLocation);
     }
 
     show(e) {

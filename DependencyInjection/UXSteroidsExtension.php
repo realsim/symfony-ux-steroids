@@ -17,6 +17,7 @@ class UXSteroidsExtension extends Extension
         $loader->load('form.php');
         $loader->load('menu.php');
         $loader->load('twig.php');
+        $loader->load('turbo.php');
 
         $container->registerForAutoconfiguration(MenuExtensionInterface::class)
             ->addTag('ux.menu.extension');

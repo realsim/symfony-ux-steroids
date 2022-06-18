@@ -4,10 +4,23 @@
     "license": "MIT",
     "private": true,
     "version": "0.1.0",
+    "main": "src/index.js",
     "symfony": {
         "controllers": {
             "form-collection": {
-                "main": "src/form_collection.js",
+                "main": "src/form_collection_controller.js",
+                "webpackMode": "eager",
+                "fetch": "eager",
+                "enabled": true
+            },
+            "form-validator": {
+                "main": "src/form_validator_controller.js",
+                "webpackMode": "eager",
+                "fetch": "eager",
+                "enabled": true
+            },
+            "modal": {
+                "main": "src/modal_controller.js",
                 "webpackMode": "eager",
                 "fetch": "eager",
                 "enabled": true
@@ -20,7 +33,7 @@
         "lint": "eslint src test"
     },
     "peerDependencies": {
-        "stimulus": "^3.0.0"
+        "@hotwired/stimulus": "^3.0.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
@@ -28,8 +41,7 @@
         "@babel/plugin-proposal-class-properties": "^7.12.1",
         "@babel/preset-env": "^7.12.7",
         "@hotwired/turbo": "^7.0.0-beta.5",
-        "@symfony/stimulus-testing": "^1.1.0",
-        "stimulus": "^2.0.0"
+        "@symfony/stimulus-testing": "^1.1.0"
     },
     "jest": {
         "testRegex": "test/.*\\.test.js",

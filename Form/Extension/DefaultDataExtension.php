@@ -18,7 +18,9 @@ class DefaultDataExtension extends AbstractTypeExtension
         if (null !== $defaultData) {
             $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($defaultData) {
                 // Если в форму не переданы доменные данные (model data), устанавливается указанное дефолтное значение
-                if (null === $event->getData()) {
+                // У checkbox и radio, вместо null, дефолтные значения приходят как false
+                $data = $event->getData();
+                if (null === $data || false === $data) {
                     $event->setData($defaultData);
                 }
             });

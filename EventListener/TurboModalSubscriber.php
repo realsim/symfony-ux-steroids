@@ -2,6 +2,8 @@
 
 namespace Symfony\UX\Steroids\EventListener;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\Steroids\Modal\TurboModal;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -23,6 +25,14 @@ class TurboModalSubscriber implements EventSubscriberInterface
     public function onKernelResponse(ResponseEvent $event): void
     {
         $response = $event->getResponse();
+
+        if ($this->isTurboModalRedirect($event->getRequest(), $response)) {
+            $event->setResponse(new Response(null, Response::HTTP_OK, [
+                'Turbo-Modal-Location' => $response->headers->get('Location'),
+            ]));
+            return;
+        }
+
         if (!($response instanceof TurboStreamResponse && $response->getStatusCode() === TurboStreamResponse::HTTP_OK)) {
             return;
         }
@@ -33,6 +43,13 @@ class TurboModalSubscriber implements EventSubscriberInterface
         if ($turboModal instanceof TurboModal) {
             $this->addModalDismiss($response, $turboModal->id);
         }
+    }
+
+    private function isTurboModalRedirect(Request $request, Response $response): bool
+    {
+        return $response->isRedirection()
+            && $request->headers->has('Turbo-Frame')
+            && $request->attributes->has('turbo_modal');
     }
 
     private function addModalDismiss(TurboStreamResponse $response, string $modalId): void
