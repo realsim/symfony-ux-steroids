@@ -2,7 +2,11 @@
 
 namespace Symfony\UX\Steroids\Breadcrumbs;
 
-class Tree implements \IteratorAggregate
+use ArrayIterator;
+use IteratorAggregate;
+use Traversable;
+
+class Tree implements IteratorAggregate
 {
     private array $items;
 
@@ -27,8 +31,8 @@ class Tree implements \IteratorAggregate
         $this->items[] = Item::text($label);
     }
 
-    public function getIterator(): iterable
+    public function getIterator(): Traversable
     {
-        return new \ArrayIterator($this->items);
+        return new ArrayIterator($this->items);
     }
 }
