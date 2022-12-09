@@ -1,0 +1,17 @@
+{% block phrase_row %}
+    <div>
+        {{ form_label(form, 'Для подтверждения введите указанный ниже текст', {
+            'label_attr': {
+                'class': 'block text-sm font-medium text-gray-700'
+            }
+        }) }}
+        <div class="mt-1 px-4 py-2 border border-gray-100 bg-gray-50 text-sm text-gray-600 font-mono shadow-sm rounded-md">{{ form.parent.vars.confirm_phrase }}</div>
+        {{ form_errors(form) }}
+        <div class="mt-1 flex rounded-md shadow-sm">
+            {{ form_widget(form, {'attr': {
+                'autocomplete': 'off',
+                'class': 'mt-1 focus:ring-red-700 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
+            }}) }}
+        </div>
+    </div>
+{% endblock %}
